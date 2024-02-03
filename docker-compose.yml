@@ -3,7 +3,9 @@ version: '3.9'
 services:
   bot_logic:
     container_name: bot_logic
-    build: ./program
+    build: ./bot_logic
+    environment:
+      - MY_API_KEY=${MY_API_KEY}
     depends_on:
       - db_express
       - ords
@@ -24,7 +26,7 @@ services:
     ports:
       - 8181:8181
     volumes: 
-      - ./ords_secrets:/opt/oracle/variables
+      - ./db/variables:/opt/oracle/variables
     restart: always
     depends_on:
       - db_express
