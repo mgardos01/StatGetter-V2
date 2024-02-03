@@ -7,6 +7,15 @@ Contains
 MY_ORACLE_PASSWORD={YOUR PASS HERE}
 MY_ORACLE_HOSTNAME={YOUR HOSTNAME HERE}
 ```
+## conn_string secret
+
+```
+username=sys (Default username)
+service=XEPDB1 (Default service)
+echo 'CONN_STRING=username/password@hostname:port/service'>./ords_secrets/conn_string.txt
+# Gets mounted to /opt/oracle/variables 
+# TODO: Make this work with secrets instead of having to do it manually
+```
 
 ## Setup Process Tutorial/TODO List: 
 ```
@@ -19,6 +28,7 @@ MY_ORACLE_HOSTNAME={YOUR HOSTNAME HERE}
 > docker compose up. 
 
 # This will install APEX and the EX Database on your system, which may also take a few minutes.  
+# Now you can connect to http://localhost:8181/ords.
 
 # Defaults:
 #   - Workspace: Internal

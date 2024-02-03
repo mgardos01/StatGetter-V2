@@ -1,6 +1,13 @@
 version: '3.9'
 
 services:
+  bot_logic:
+    container_name: bot_logic
+    build: ./program
+    depends_on:
+      - db_express
+      - ords
+
   db_express:
     container_name: db_express
     hostname: ${MY_ORACLE_HOSTNAME}
@@ -21,9 +28,7 @@ services:
     restart: always
     depends_on:
       - db_express
+
 volumes:
   db_volume:
     external: false
-
-
-
