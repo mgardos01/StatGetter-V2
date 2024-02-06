@@ -1,5 +1,6 @@
 import os
 from .setup_logger import setup 
+import .fetch
 # from db_test import test_oracle_db
 # test_oracle_db()
 
