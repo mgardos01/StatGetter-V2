@@ -1,15 +1,7 @@
 version: '3.9'
 
 services:
-  bot_logic:
-    container_name: bot_logic
-    build: ./bot_logic
-    environment:
-      - MY_API_KEY=${MY_API_KEY}
-    depends_on:
-      - db_express
-      - ords
-
+  
   db_express:
     container_name: db_express
     hostname: ${MY_ORACLE_HOSTNAME}
@@ -32,6 +24,24 @@ services:
     depends_on:
       - db_express
 
+  chrome:
+    image: selenium/standalone-chrome:latest
+    hostname: chrome 
+    privileged: true
+    shm_size: 2g
+    ports:
+      - 4444:4444
+
+  bot_logic:
+    container_name: bot_logic
+    build: ./bot_logic
+    environment:
+      - MY_API_KEY=${MY_API_KEY}
+    depends_on:
+      - db_express
+      - ords
+      - chrome
+      
 volumes:
   db_volume:
     external: false
