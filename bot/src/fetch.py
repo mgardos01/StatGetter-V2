@@ -6,19 +6,20 @@ from io import BytesIO
 
 # True if Good, False if not
 async def connection_test(ctx):
-    pass
     # await ctx.send("Beginning connection test...")
     # try:
     #     options = webdriver.ChromeOptions()
     #     options.add_argument("--headless")
     #     options.add_argument("--no-sandbox")
     #     driver = webdriver.Remote(
+    #         # This name + port comes from the docker-compose config
     #         command_executor='http://chrome:4444/wd/hub',
     #         options=options
     #     )
     # except Exception as error:
     #     await ctx.send(f"Driver failed to connect... Error: {error}")
     # await ctx.send("Driver connected!...")
+    pass
 
 driver = None 
 def driver_setup():
@@ -29,14 +30,19 @@ def driver_setup():
     options.add_argument("--starts-maximized")
     options.add_argument('window-size=1920x1080');
     driver = webdriver.Remote(
+        # This name + port comes from the docker-compose config
         command_executor='http://chrome:4444/wd/hub',
         options=options
     )
 
-# TODO json config list of services (sites) to fetch from
-# services = []
-# def fetch(service, **kwargs):
-def fetch(ctx, name, tag):
+def fetch(ctx, opt, name, tag):
+    match opt: 
+        case "tracker.gg": 
+            return tracker(ctx, name, tag)
+        case _:
+            return None
+
+def tracker(ctx, name, tag):
     if driver is None:
         driver_setup()
 

@@ -10,9 +10,9 @@ from nextcord.ext import commands
 
 # TESTING_GUILD_ID = 123456789  # Replace with your guild ID
 
-logger_setup()
-
 def run_app():
+    logger_setup()
+    
     bot = commands.Bot()
 
     intents = nextcord.Intents.default()
@@ -27,8 +27,8 @@ def run_app():
 
     @bot.command()
     async def test(ctx, name, tag):
-        print("Starting to fetch...")
-        png = fetch(ctx, name, tag)
+        opt = "tracker.gg"
+        png = fetch(ctx, opt, name, tag)
         if png is None:
             await ctx.send('Something went wrong...')
         else:
@@ -53,5 +53,3 @@ def run_app():
         
     token = os.environ['MY_DISCORD_API_KEY']
     bot.run(token)
-
-run_app()

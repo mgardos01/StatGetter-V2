@@ -1,12 +1,12 @@
 import getpass
 import oracledb
 
-def stest_oracle_db():
-    pw = getpass.getpass("Enter password: ")
+def test_oracle_db():
+    # pw = getpass.getpass("Enter password: ")
 
     connection = oracledb.connect(
         user="demopython",
-        password=pw,
+        password="PASSWORD",
         dsn="localhost/xepdb1")
 
     print("Successfully connected to Oracle Database")
