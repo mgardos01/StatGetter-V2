@@ -35,7 +35,7 @@ services:
     container_name: bot
     build: ./bot
     environment:
-      - MY_DISCORD_API_KEY=${MY_DISCORD_API_KEY}
+      - DISCORD_API_KEY=${DISCORD_API_KEY}
     depends_on:
       - db_express
       - ords

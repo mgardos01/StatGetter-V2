@@ -6,50 +6,44 @@ from .fetch import fetch, connection_test
 # test_oracle_db()
 
 import nextcord
+from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
-
-# TESTING_GUILD_ID = 123456789  # Replace with your guild ID
 
 def run_app():
     logger_setup()
-    
+
     bot = commands.Bot()
 
     intents = nextcord.Intents.default()
     intents.message_content = True
     bot = commands.Bot(command_prefix="$", intents=intents)
 
-    # TODO remove this, testing 
-    @bot.command()
-    async def testest(ctx, name, tag):
-        print('please print')
-        await ctx.send(f'Your val tag: {name}#{tag}')
+    @bot.slash_command(description="Main command to get stats", guild_ids=[int(os.environ["TESTING_GUILD_ID"])])
+    async def statget(interaction: Interaction):
+        pass
 
-    @bot.command()
-    async def test(ctx, name, tag):
-        opt = "tracker.gg"
-        png = fetch(ctx, opt, name, tag)
-        if png is None:
-            await ctx.send('Something went wrong...')
-        else:
-            await ctx.send(file=nextcord.File(png, filename=f'{name}_{tag}.png'))
-
-    # TODO remove this, it was just for testing
-    # @bot.command()
-    # async def connect(ctx, please):
-    #     if please != "please":
-    #         await ctx.send(f'You have to say please or else I will never work')
-    #         return 
-    #     await connection_test(ctx)
-
+    @statget.subcommand(name="fetch", description="Fetches stat data from the web")
+    async def statfetch(interaction: Interaction, 
+        opt = SlashOption(
+            choices=["tracker.gg"]
+        ), 
+        username:str = SlashOption(required=True),
+        tag:str = SlashOption(name="tag", required=True)
+    ):
+        await interaction.response.defer()
+        try:
+            await fetch(interaction, opt, username, tag)
+        except Exception as error: 
+            await interaction.followup.send(
+                'Something went wrong...\n'
+                '```\n'
+                f'{error}\n'
+                f'```'
+            )
+        
     @bot.event
     async def on_ready():
         print(f'We have logged in as {bot.user}')
 
-    # TODO convert into slash command later
-    # @bot.slash_command(description="My first slash command", guild_ids=[TESTING_GUILD_ID])
-    # async def hello(interaction: nextcord.Interaction):
-    #     await interaction.send("Hello!")
-        
-    token = os.environ['MY_DISCORD_API_KEY']
+    token = os.environ['DISCORD_API_KEY']
     bot.run(token)
