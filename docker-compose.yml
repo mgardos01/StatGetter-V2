@@ -1,7 +1,6 @@
 version: '3.9'
 
 services:
-  
   db_express:
     container_name: db_express
     hostname: ${MY_ORACLE_HOSTNAME}
@@ -32,11 +31,11 @@ services:
     ports:
       - 4444:4444
 
-  bot_logic:
-    container_name: bot_logic
-    build: ./bot_logic
+  bot:
+    container_name: bot
+    build: ./bot
     environment:
-      - MY_API_KEY=${MY_API_KEY}
+      - MY_DISCORD_API_KEY=${MY_DISCORD_API_KEY}
     depends_on:
       - db_express
       - ords
