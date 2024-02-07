@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "statgetter-v2"
+version = "0.1.0"
+description = ""
+authors = ["mgardos01 <mgardos123@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+nextcord = "^2.6.0"
+oracledb = "^2.0.1"
+python-dotenv = "^1.0.1"
+selenium = "^4.17.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

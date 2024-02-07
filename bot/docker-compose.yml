@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+
+  chrome:
+    image: selenium/standalone-chrome:latest
+    hostname: chrome 
+    privileged: true
+    shm_size: 2g
+    ports:
+      - 4444:4444
+
+  bot:
+    container_name: bot
+    build: ./bot
+    environment:
+      - MY_DISCORD_API_KEY=${MY_DISCORD_API_KEY}
+    depends_on:
+      - chrome
